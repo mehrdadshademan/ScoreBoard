@@ -3,16 +3,18 @@ package com.sportradar.scoreboard;
 import com.sportradar.scoreboard.Interfaces.Match;
 import com.sportradar.scoreboard.domain.FootballMatch;
 import com.sportradar.scoreboard.exception.MatchBadRequestException;
-import com.sportradar.scoreboard.service.MatchImpl;
+import com.sportradar.scoreboard.imp.MatchImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@TestInstance(TestInstance.Lifecycle.PER_METHOD)
+@ExtendWith(MockitoExtension.class)
 class MatchTest {
 
     @Mock
@@ -20,7 +22,6 @@ class MatchTest {
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.initMocks(this);
         this.match = new MatchImpl();
     }
 

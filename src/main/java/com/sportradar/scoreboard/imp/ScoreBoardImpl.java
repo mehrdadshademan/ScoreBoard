@@ -1,4 +1,4 @@
-package com.sportradar.scoreboard.service;
+package com.sportradar.scoreboard.imp;
 
 import com.sportradar.scoreboard.Interfaces.Match;
 import com.sportradar.scoreboard.Interfaces.ScoreBoard;
@@ -40,10 +40,11 @@ public class ScoreBoardImpl implements ScoreBoard {
     }
 
     /**
-     *  the team name should not be null or exist in score board
-     * @param homeTeam  home team in match
-     * @param awayTeam  away team in match
-     * @return  boolean true if  the team is not null or empty and does not exist in score board
+     * Check that the team names are not null and do not already exist in the scoreboard.
+     * @param homeTeam Home team in the match.
+     * @param awayTeam Away team in the match.
+     * @return True if the team names are not null or empty and do not exist in the scoreboard; otherwise, false.
+
      */
     private boolean isExistInScoreBoardAndNotBlankNames(String homeTeam, String awayTeam) {
         if (StringUtils.isBlank(homeTeam) || StringUtils.isBlank(awayTeam)) {
@@ -59,10 +60,11 @@ public class ScoreBoardImpl implements ScoreBoard {
     }
 
     /**
-     * start match and insert in score board , checked the match is not exist in score board and then start it
-     * @param homeTeam home team in match
-     * @param awayTeam away team in match
-     * @return add the match in board and return the started match
+     * Start a match and insert it into the scoreboard. Checks whether the match already exists on the scoreboard before starting it.
+     * @param homeTeam Home team in the match.
+     * @param awayTeam Away team in the match.
+     * @return The match added to the scoreboard and the started match.
+
      */
     @Override
     public FootballMatch startMatch(String homeTeam, String awayTeam) {
@@ -80,8 +82,9 @@ public class ScoreBoardImpl implements ScoreBoard {
     }
 
     /**
-     * sort the score board base on total  score and most recently start
-     * @return sorted list of matches
+     * Sort the scoreboard based on total score and most recently started matches.
+     * @return A sorted list of matches.
+
      */
     @Override
     public List<FootballMatch> scoreBoardSummery() {

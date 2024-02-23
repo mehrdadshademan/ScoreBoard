@@ -4,20 +4,23 @@ package com.sportradar.scoreboard;
 import com.sportradar.scoreboard.Interfaces.Match;
 import com.sportradar.scoreboard.domain.FootballMatch;
 import com.sportradar.scoreboard.exception.MatchBadRequestException;
-import com.sportradar.scoreboard.service.ScoreBoardImpl;
+import com.sportradar.scoreboard.imp.ScoreBoardImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 
+@ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ScoreBoardTest {
 
@@ -29,7 +32,6 @@ class ScoreBoardTest {
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.initMocks(this);
         this.scoreBoard = new ScoreBoardImpl(match);
     }
 
@@ -37,9 +39,7 @@ class ScoreBoardTest {
     @ParameterizedTest
     @CsvSource({"Mexico,Canada", "Mexico,Brazil", "mexico,canada", "France,canada", "' ',"})
     void should_ThrowsException_StartMatch_When_WrongInputForDefineMatch(String homeTeam, String awayTeam) {
-        FootballMatch expectFootballMatch = new FootballMatch(homeTeam, awayTeam);
         FootballMatch firstMatchInScoreBoard = new FootballMatch("Mexico", "Canada");
-        given(match.startMatch(homeTeam, awayTeam)).willReturn(expectFootballMatch);
         given(match.startMatch("Mexico", "Canada")).willReturn(firstMatchInScoreBoard);
         FootballMatch scoreBoardFootballMatch = scoreBoard.startMatch("Mexico", "Canada");
         Assertions.assertThrows(MatchBadRequestException.class, () -> scoreBoard.startMatch(homeTeam, awayTeam));
@@ -100,7 +100,7 @@ class ScoreBoardTest {
 
 
     @Test
-    void should_Success_ShowSummery_When_StartAndUpdateAndFinishMatches(){
+    void should_Success_ShowSummery_When_StartAndUpdateAndFinishMatches() {
 
         //start matches
         FootballMatch footballMatch1 = new FootballMatch("Brazil", "German");
@@ -120,13 +120,13 @@ class ScoreBoardTest {
         //check scoreBoard result after finish a match
         scoreBoard.finishMatch(footballMatch1);
         int scoreBoardSummeryAfterFinishMatch = scoreBoard.scoreBoardSummery().size();
-        Assertions.assertEquals(scoreBoardSummeryAfterFinishMatch, scoreBoardSummeryAfterMatches-1);
+        Assertions.assertEquals(scoreBoardSummeryAfterFinishMatch, scoreBoardSummeryAfterMatches - 1);
 
         //Check scoreBoard after update a match
         footballMatch2.setHomeScore(2);
         footballMatch2.setAwayScore(2);
         given(match.updateMatch(footballMatch2, 2, 2)).willReturn(footballMatch2);
-        scoreBoard.updateMatch(footballMatch2,2,2);
+        scoreBoard.updateMatch(footballMatch2, 2, 2);
         int scoreBoardSummeryAfterUpdateMatch = scoreBoard.scoreBoardSummery().size();
         Assertions.assertEquals(scoreBoardSummeryAfterUpdateMatch, scoreBoardSummeryAfterFinishMatch);
 

@@ -3,16 +3,20 @@ package com.sportradar.scoreboard;
 
 import com.sportradar.scoreboard.Interfaces.Match;
 import com.sportradar.scoreboard.domain.FootballMatch;
-import com.sportradar.scoreboard.service.MatchImpl;
-import com.sportradar.scoreboard.service.ScoreBoardImpl;
+import com.sportradar.scoreboard.imp.MatchImpl;
+import com.sportradar.scoreboard.imp.ScoreBoardImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@ExtendWith(MockitoExtension.class)
 class ScoreboardIntegrationTest {
 
     @Mock
@@ -22,7 +26,6 @@ class ScoreboardIntegrationTest {
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.initMocks(this);
         this.match = new MatchImpl();
         this.scoreBoard = new ScoreBoardImpl(match);
     }
@@ -30,24 +33,24 @@ class ScoreboardIntegrationTest {
 
     @Test
     void testScoreboardIntegration() {
-        FootballMatch match1 = scoreBoard.startMatch("Mexico", "Canada");
-        FootballMatch match2 = scoreBoard.startMatch("Spain", "Brazil");
-        FootballMatch match3 = scoreBoard.startMatch("Germany", "France");
-        FootballMatch match4 = scoreBoard.startMatch("Uruguay", "Italy");
-        FootballMatch match5 = scoreBoard.startMatch("Argentina", "Australia");
+        FootballMatch firstMatch = scoreBoard.startMatch("Mexico", "Canada");
+        FootballMatch secondMatch = scoreBoard.startMatch("Spain", "Brazil");
+        FootballMatch thirdMatch = scoreBoard.startMatch("Germany", "France");
+        FootballMatch fourthMatch = scoreBoard.startMatch("Uruguay", "Italy");
+        FootballMatch fifthMatch = scoreBoard.startMatch("Argentina", "Australia");
 
-        scoreBoard.updateMatch(match1, 0, 5);
-        scoreBoard.updateMatch(match2, 10, 2);
-        scoreBoard.updateMatch(match3, 2, 2);
-        scoreBoard.updateMatch(match4, 6, 6);
-        scoreBoard.updateMatch(match5, 3, 1);
+        scoreBoard.updateMatch(firstMatch, 0, 5);
+        scoreBoard.updateMatch(secondMatch, 10, 2);
+        scoreBoard.updateMatch(thirdMatch, 2, 2);
+        scoreBoard.updateMatch(fourthMatch, 6, 6);
+        scoreBoard.updateMatch(fifthMatch, 3, 1);
 
         List<FootballMatch> expectScoreBoard = new ArrayList<>();
-        expectScoreBoard.add(match4);
-        expectScoreBoard.add(match2);
-        expectScoreBoard.add(match1);
-        expectScoreBoard.add(match5);
-        expectScoreBoard.add(match3);
+        expectScoreBoard.add(fourthMatch);
+        expectScoreBoard.add(secondMatch);
+        expectScoreBoard.add(firstMatch);
+        expectScoreBoard.add(fifthMatch);
+        expectScoreBoard.add(thirdMatch);
 
         List<FootballMatch> scoreBoardSummery = scoreBoard.scoreBoardSummery();
         Assertions.assertEquals(expectScoreBoard, scoreBoardSummery);
