@@ -82,6 +82,7 @@ class ScoreBoardTest {
 
         given(match.startMatch(homeTeam, awayTeam)).willReturn(footballMatch);
         scoreBoard.startMatch(homeTeam, awayTeam);
+        Assertions.assertTrue(scoreBoard.scoreBoardSummery().stream().findFirst().isPresent());
         FootballMatch summeryBoard = scoreBoard.scoreBoardSummery().stream().findFirst().get();
         int summeryBoardHomeScore = summeryBoard.getHomeScore();
         int summeryBoardAwayScore = summeryBoard.getAwayScore();
@@ -89,6 +90,7 @@ class ScoreBoardTest {
         footballMatch.setHomeScore(homeScore);
         given(match.updateMatch(footballMatch, homeScore, awayScore)).willReturn(footballMatch);
         FootballMatch updatedFootballMatch = scoreBoard.updateMatch(footballMatch, homeScore, awayScore);
+        Assertions.assertTrue(scoreBoard.scoreBoardSummery().stream().findFirst().isPresent());
         FootballMatch summeryBoardAfterUpdate = scoreBoard.scoreBoardSummery().stream().findFirst().get();
 
         Assertions.assertEquals(updatedFootballMatch.getHomeScore(), footballMatch.getHomeScore());
