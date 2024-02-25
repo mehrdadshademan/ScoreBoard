@@ -2,7 +2,7 @@ package com.sportradar.scoreboard;
 
 import com.sportradar.scoreboard.interfaces.Match;
 import com.sportradar.scoreboard.domain.FootballMatch;
-import com.sportradar.scoreboard.exception.MatchBadRequestInputException;
+import com.sportradar.scoreboard.exceptions.MatchBadRequestInputException;
 import com.sportradar.scoreboard.impl.MatchImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

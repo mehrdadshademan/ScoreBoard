@@ -1,4 +1,4 @@
-package com.sportradar.scoreboard.exception;
+package com.sportradar.scoreboard.exceptions;
 
 public class MatchBadRequestInputException extends RuntimeException{
     public MatchBadRequestInputException(String message) {

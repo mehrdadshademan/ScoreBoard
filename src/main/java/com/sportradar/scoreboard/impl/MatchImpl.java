@@ -2,7 +2,7 @@ package com.sportradar.scoreboard.impl;
 
 import com.sportradar.scoreboard.interfaces.Match;
 import com.sportradar.scoreboard.domain.FootballMatch;
-import com.sportradar.scoreboard.exception.MatchBadRequestInputException;
+import com.sportradar.scoreboard.exceptions.MatchBadRequestInputException;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
