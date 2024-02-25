@@ -1,16 +1,15 @@
 package com.sportradar.scoreboard;
 
 
-import com.sportradar.scoreboard.Interfaces.Match;
+import com.sportradar.scoreboard.interfaces.Match;
 import com.sportradar.scoreboard.domain.FootballMatch;
-import com.sportradar.scoreboard.imp.MatchImpl;
-import com.sportradar.scoreboard.imp.ScoreBoardImpl;
+import com.sportradar.scoreboard.impl.MatchImpl;
+import com.sportradar.scoreboard.impl.ScoreBoardImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;

@@ -1,17 +1,15 @@
 package com.sportradar.scoreboard;
 
-import com.sportradar.scoreboard.Interfaces.Match;
+import com.sportradar.scoreboard.interfaces.Match;
 import com.sportradar.scoreboard.domain.FootballMatch;
-import com.sportradar.scoreboard.exception.MatchBadRequestException;
-import com.sportradar.scoreboard.imp.MatchImpl;
+import com.sportradar.scoreboard.exception.MatchBadRequestInputException;
+import com.sportradar.scoreboard.impl.MatchImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,7 +27,7 @@ class MatchTest {
     @CsvSource({"'' , ''", "'      @!!@#' ,'!!!!!!a123123a'", "'A','A'", "null , ''"})
     void should_ThrowsException_StartMatch_When_WrongInputForDefineMatch(String homeTeam, String awayTeam) {
         System.out.println("ss");
-        Assertions.assertThrows(MatchBadRequestException.class, () -> match.startMatch(homeTeam, awayTeam));
+        Assertions.assertThrows(MatchBadRequestInputException.class, () -> match.startMatch(homeTeam, awayTeam));
     }
 
     @ParameterizedTest
@@ -47,9 +45,9 @@ class MatchTest {
     @CsvSource({"Mexico,0,Canada,-2", "Spain,-1,Brazil,-6", "-1,-100000,!,9 "})
     void should_ThrowsException_UpdateMatch_When_WrongInputIsUpdateMatch(String homeTeam, int homeScore, String awayTeam, int awayScore) {
         FootballMatch footballMatch = new FootballMatch(homeTeam, awayTeam);
-        Assertions.assertThrows(MatchBadRequestException.class, () -> match.updateMatch(footballMatch, homeScore, awayScore));
+        Assertions.assertThrows(MatchBadRequestInputException.class, () -> match.updateMatch(footballMatch, homeScore, awayScore));
         FootballMatch nullFootballMatch = null;
-        Assertions.assertThrows(MatchBadRequestException.class, () -> match.updateMatch(nullFootballMatch, homeScore, awayScore));
+        Assertions.assertThrows(MatchBadRequestInputException.class, () -> match.updateMatch(nullFootballMatch, homeScore, awayScore));
     }
 
     @ParameterizedTest
@@ -57,7 +55,7 @@ class MatchTest {
     void should_ThrowsException_UpdateMatch_When_InputScoreIsLessThanTeamScores(String homeTeam, int homeScore, String awayTeam, int awayScore) {
         FootballMatch footballMatch = new FootballMatch(homeTeam, awayTeam);
         footballMatch.setHomeScore(100);
-        Assertions.assertThrows(MatchBadRequestException.class, () -> match.updateMatch(footballMatch, homeScore, awayScore));
+        Assertions.assertThrows(MatchBadRequestInputException.class, () -> match.updateMatch(footballMatch, homeScore, awayScore));
     }
 
     @ParameterizedTest

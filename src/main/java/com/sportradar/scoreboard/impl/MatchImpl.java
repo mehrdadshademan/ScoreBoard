@@ -1,8 +1,8 @@
-package com.sportradar.scoreboard.imp;
+package com.sportradar.scoreboard.impl;
 
-import com.sportradar.scoreboard.Interfaces.Match;
+import com.sportradar.scoreboard.interfaces.Match;
 import com.sportradar.scoreboard.domain.FootballMatch;
-import com.sportradar.scoreboard.exception.MatchBadRequestException;
+import com.sportradar.scoreboard.exception.MatchBadRequestInputException;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +23,7 @@ public class MatchImpl implements Match {
         log.debug("update the match:{} with homeScore:{} and  awayScore:{}", match, homeScore, awayScore);
         if (!isValidMatch(match, homeScore, awayScore)) {
             log.error("the input is not valid to update the Match:{}, homeScore:{} , awayScore:{}", match, homeScore, awayScore);
-            throw new MatchBadRequestException("the input is not valid to update the Match");
+            throw new MatchBadRequestInputException("the input is not valid to update the Match");
         }
         match.setHomeScore(homeScore);
         match.setAwayScore(awayScore);
@@ -43,7 +43,7 @@ public class MatchImpl implements Match {
     public FootballMatch startMatch(String homeTeam, String awayTeam) {
         if (!isValidTeamName(homeTeam, awayTeam)) {
             log.error("the team names are not valid to start the Match , homeTeam:{} , awayTeam:{}", homeTeam, awayTeam);
-            throw new MatchBadRequestException("the team names are not valid to start the Match");
+            throw new MatchBadRequestInputException("the team names are not valid to start the Match");
         }
         return new FootballMatch(homeTeam, awayTeam);
     }

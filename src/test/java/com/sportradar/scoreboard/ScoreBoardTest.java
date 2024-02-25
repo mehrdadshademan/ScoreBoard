@@ -1,10 +1,10 @@
 package com.sportradar.scoreboard;
 
 
-import com.sportradar.scoreboard.Interfaces.Match;
+import com.sportradar.scoreboard.interfaces.Match;
 import com.sportradar.scoreboard.domain.FootballMatch;
-import com.sportradar.scoreboard.exception.MatchBadRequestException;
-import com.sportradar.scoreboard.imp.ScoreBoardImpl;
+import com.sportradar.scoreboard.exception.MatchBadRequestInputException;
+import com.sportradar.scoreboard.impl.ScoreBoardImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -42,7 +41,7 @@ class ScoreBoardTest {
         FootballMatch firstMatchInScoreBoard = new FootballMatch("Mexico", "Canada");
         given(match.startMatch("Mexico", "Canada")).willReturn(firstMatchInScoreBoard);
         FootballMatch scoreBoardFootballMatch = scoreBoard.startMatch("Mexico", "Canada");
-        Assertions.assertThrows(MatchBadRequestException.class, () -> scoreBoard.startMatch(homeTeam, awayTeam));
+        Assertions.assertThrows(MatchBadRequestInputException.class, () -> scoreBoard.startMatch(homeTeam, awayTeam));
         List<FootballMatch> footballMatches = scoreBoard.scoreBoardSummery();
         Assertions.assertEquals(1, footballMatches.size());
         Assertions.assertTrue(footballMatches.contains(scoreBoardFootballMatch));

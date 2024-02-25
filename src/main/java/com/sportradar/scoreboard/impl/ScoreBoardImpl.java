@@ -1,9 +1,9 @@
-package com.sportradar.scoreboard.imp;
+package com.sportradar.scoreboard.impl;
 
-import com.sportradar.scoreboard.Interfaces.Match;
-import com.sportradar.scoreboard.Interfaces.ScoreBoard;
+import com.sportradar.scoreboard.interfaces.Match;
+import com.sportradar.scoreboard.interfaces.ScoreBoard;
 import com.sportradar.scoreboard.domain.FootballMatch;
-import com.sportradar.scoreboard.exception.MatchBadRequestException;
+import com.sportradar.scoreboard.exception.MatchBadRequestInputException;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,10 +52,10 @@ public class ScoreBoardImpl implements ScoreBoard {
         }
         return footballMatchList.stream()
                 .noneMatch(
-                        match -> match.getHomeTeam().equalsIgnoreCase(homeTeam) ||
-                                match.getAwayTeam().equalsIgnoreCase(homeTeam) ||
-                                match.getHomeTeam().equalsIgnoreCase(awayTeam) ||
-                                match.getAwayTeam().equalsIgnoreCase(awayTeam)
+                        footballMatch -> footballMatch.getHomeTeam().equalsIgnoreCase(homeTeam) ||
+                                footballMatch.getAwayTeam().equalsIgnoreCase(homeTeam) ||
+                                footballMatch.getHomeTeam().equalsIgnoreCase(awayTeam) ||
+                                footballMatch.getAwayTeam().equalsIgnoreCase(awayTeam)
                 );
     }
 
@@ -71,7 +71,7 @@ public class ScoreBoardImpl implements ScoreBoard {
         log.debug("the Match is Start between homeTeam:{} , awayTeam:{}", homeTeam, awayTeam);
         if (!isExistInScoreBoardAndNotBlankNames(homeTeam, awayTeam)) {
             log.error("the home:{} or away:{} Team is exists on scoreBoard", homeTeam, awayTeam);
-            throw new MatchBadRequestException("the teams are exists in scoreBoard");
+            throw new MatchBadRequestInputException("the teams are exists in scoreBoard");
         }
         FootballMatch footballMatch = match.startMatch(homeTeam, awayTeam);
         if (footballMatch != null) {
